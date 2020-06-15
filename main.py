@@ -6,57 +6,55 @@ import rt
 import math
 import threading
 import pygame 
+import sys
 
-# activate the pygame library . 
-# initiate pygame and give permission 
-# to use pygame's functionality. 
-pygame.init() 
+pygame.init()
 
-# define the RGB value 
-# for white colour 
-white = (255, 255, 255) 
+#Constants
+PI=math.pi
+#Colors
+WHITE=(255,255,255)
+BLACK=(0,0,0)
+GREEN=(0,255,0)
+RED=(255,0,0)
+BORDER=50
 
-# assigning values to X and Y variable (Screen size)
-X = 700
-Y = 560
+X=700
+Y=496
 
-# create the display surface object 
-# of specific dimension..e(X, Y). 
-display_surface = pygame.display.set_mode((X, Y )) 
 
-# set the pygame window name 
-pygame.display.set_caption('Image') 
+#reference image for background color
+im_file = Image.open("img_proyecto2_v2.jpg")
+ref = np.array(im_file) #Turns the image into a pixel array
 
-# create a surface object, image is drawn on it. 
-image = pygame.image.load(r'cuphead.jpg') 
+#aux image setup
+i = Image.new("RGB", (X, Y), (0, 0, 0) )
+px = np.array(i)
 
-# infinite loop 
-while True : 
+screen= pygame.display.set_mode((X,Y))
 
-	# completely fill the surface object 
-	# with white colour 
-	display_surface.fill(white) 
+def getFrame():
+    # grabs the current image and returns it
+    pixels=np.flip(px,1)
+    pixels=np.rot90(pixels,1,(0,1))
+    #pixels = np.roll(px,(1,2),(0,1))
+    return pixels
 
-	# copying the image surface object 
-	# to the display surface object at 
-	# (0, 0) coordinate. 
-	#display_surface.blit(image, (0, 0)) 
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
 
-	# iterate over the list of Event objects 
-	# that was returned by pygame.event.get() method. 
-	for event in pygame.event.get() : 
+    # Clear screen to white before drawing 
+    screen.fill((255, 255, 255))
 
-		# if event object type is QUIT 
-		# then quitting the pygame 
-		# and program both. 
-		if event.type == pygame.QUIT : 
+    # Get a numpy array to display from the simulation
+    npimage=getFrame()
 
-			# deactivates the pygame library 
-			pygame.quit() 
+    # Convert to a surface and splat onto screen offset by border width and height
+    surface = pygame.surfarray.make_surface(npimage)
+    screen.blit(surface, (0, 0))
+    
+    pygame.display.flip()
 
-			# quit the program. 
-			quit() 
-
-		# Draws the surface object to the screen. 
-		pygame.display.update() 
 			
