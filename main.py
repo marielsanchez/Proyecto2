@@ -42,6 +42,13 @@ def raytrace():
             #normalized distance to source
             length2 = rt.length(rt.normalize(dir))
             
+            
+
+            #colorBleeding = False
+            #if seg in colorSegments:
+            #        colorBleeding = True
+            
+            #checks if the light gets there
             free = True
             for seg in segments:                
                 #check if ray intersects with segment
@@ -61,6 +68,7 @@ def raytrace():
                 
                 #add all light sources 
                 pixel += values
+                
             
             #average pixel value and assign
             px[int(point.x)][int(point.y)] = pixel // len(sources)
@@ -93,6 +101,20 @@ segments = [
             ([Point(348,73), Point(430,137)]),
             ([Point(430,137), Point(323,177)]),
             ([Point(323,177), Point(249,132)]),
+            ([Point(417,75), Point(501,7)]),#Green Triangle
+            ([Point(501,7), Point(541,117)]),
+            ([Point(417,75), Point(541,117)]),
+            ([Point(440,492),Point(503,369)]),#Red Triangle
+            ([Point(503,369), Point(581,475)]),
+            ([Point(581,475), Point(440,492)]),
+            ([Point(70,442), Point(149,415)]),#Pentagon
+            ([Point(149,415), Point(230,496)]),
+            ([Point(230,496), Point(136,554)]),
+            ([Point(136,552), Point(21,507)]),
+            ([Point(21,507), Point(73,442)])
+            ]
+
+colorSegments = [
             ([Point(417,75), Point(501,7)]),#Green Triangle
             ([Point(501,7), Point(541,117)]),
             ([Point(417,75), Point(541,117)]),
