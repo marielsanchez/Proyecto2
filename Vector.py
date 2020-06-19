@@ -11,40 +11,39 @@ class Vector:
     def __str__(self):
         return "({},{},{})".format(self.x,self.y,self.z)
     
-    def __magnitude__(self):
+    def magnitude(self):
         #gets the distance from the origin to a particular vector
         result = self.x**2 + self.y**2 + self.z**2
         return result**(1/2)
 
-    def __dotProduct__(self, vector2):
+    def dotProduct(self, vector2):
         #returns de dotProduct between 2 vectors
-        return self.x * vecto2.x + self.y * vector2.y + self.z * vector2.z
+        return self.x * vector2.x + self.y * vector2.y + self.z * vector2.z
 
-    def __normalize__(self):
-        magnitude = __magnitude__(self)
+    def normalize(self):
+        magnitude = self.magnitude()
         if magnitude == 0:
             return
         else:
             return self/magnitude
 
-    def __addition__(self, vector2):
+    def __add__(self, vector2):
         #returns de dotProduct between 2 vectors
-        return Vector(self.x + vecto2.x, self.y + vector2.y, self.z + vector2.z)
+        return Vector(self.x + vector2.x, self.y + vector2.y, self.z + vector2.z)
 
-    def __subtraction__(self, vector2):
+    def __sub__(self, vector2):
         #returns de dotProduct between 2 vectors
-        return Vector(self.x - vecto2.x, self.y - vector2.y, self.z - vector2.z)
+        return Vector(self.x - vector2.x, self.y - vector2.y, self.z - vector2.z)
     
-    def __multiply__(self, n):
+    def __mul__(self, n):
         #returns de dotProduct between 2 vectors
         assert not isinstance(n, Vector)
         return Vector(self.x * n, self.y * n, self.z *n)
 
-    def __rMul__(self, vector2):
-        return self.__rMul__(vector2)
+    def __rmul__(self, vector2):
+        return self.__mul__(vector2)
     
-
-    def __division__(self, n):
+    def __truediv__(self, n):
         #returns de dotProduct between 2 vectors
         assert not isinstance(n, Vector)
         return Vector(self.x / n, self.y / n, self.z /n)
