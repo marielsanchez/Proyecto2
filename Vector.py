@@ -48,6 +48,12 @@ class Vector:
         assert not isinstance(n, Vector)
         return Vector(self.x / n, self.y / n, self.z /n)
 
+    def dot(self, p2):
+        return (self.x*p2.x) + (self.y*p2.y)
+
+    def cross(self, p2):
+        return (self.x*p2.y) - (self.y*p2.x)
+
 
 
     

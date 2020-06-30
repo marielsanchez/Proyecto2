@@ -1,5 +1,12 @@
-class Point:
+from vector import Vector
 
+class Point(Vector):
+    """
+    Stores de 3D coordinates of a Point
+    Alias for Vector
+    """
+    pass
+"""
     x = 0.0
     y = 0.0
 
@@ -23,4 +30,5 @@ class Point:
         return (self.x*p2.y) - (self.y*p2.x)
 
     def __str__(self):
-        return "[ {}, {}]".format(self.x, self.y) 
+        return "[ {}, {}]".format(self.x, self.y)
+"""

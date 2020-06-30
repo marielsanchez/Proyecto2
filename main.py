@@ -1,27 +1,23 @@
-from image import Image
 from color import Color
+from vector import Vector
+from point import Point
+from square import Square
+from scene import Scene
+from engine import RenderEngine
+
 
 def main():
-    WIDTH = 3
-    HEIGHT = 2
-    im = Image(WIDTH, HEIGHT)
-    red = Color(x = 1,y = 0,z = 0)
-    green = Color(x = 0,y = 1,z = 0)
-    blue = Color(x = 0,y = 0,z = 1)
-
-    # first row of the image
-    im.setPixel(0,0,red)
-    im.setPixel(1,0,green)
-    im.setPixel(2,0,blue)
-    
-    # second row of the image
-    im.setPixel(0,1,red + green)
-    im.setPixel(1,1,red + green + blue)
-    im.setPixel(2,1,red*0.001)
+    WIDTH = 320
+    HEIGHT = 200
+    camera = Vector(0,0,-1)
+    objects = [Square(Point(-0.25,0.25,0),Point(0.25,0.25,0),Point(-0.25,-0.25,0),Point(0.25,-0.25,0), Color.from_hex("#FF0000"))]
+    scene = Scene(camera,objects,WIDTH,HEIGHT)
+    engine = RenderEngine()
+    image = engine.render(scene)
 
     # writes the image
     with open("test.ppm","w") as img_file:
-        im.writePpm(img_file)
+        image.write_ppm(img_file)
 
 main()
     
