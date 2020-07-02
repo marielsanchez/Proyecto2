@@ -1,9 +1,6 @@
 class Vector:
-    x = 0.0
-    y = 0.0
-    z = 0.0
 
-    def __init__(self,x,y,z):
+    def __init__(self,x=0.0,y=0.0,z=0.0):
         self.x = x
         self.y = y
         self.z = z
@@ -16,7 +13,7 @@ class Vector:
         result = self.x**2 + self.y**2 + self.z**2
         return result**(1/2)
 
-    def dotProduct(self, vector2):
+    def dot_product(self, vector2):
         #returns de dotProduct between 2 vectors
         return self.x * vector2.x + self.y * vector2.y + self.z * vector2.z
 

@@ -11,6 +11,63 @@ class Square:
         self.pointD = pointD
         self.material = material  
 
+    def intersectsAB(self, ray):
+        """
+        recibes a ray. checks if it intersects the segment
+        dot: denominator. if dot = 0 they're paralel
+        t1: distance from origin to intersection
+        t2: intersection IN the segment
+        """
+        v1 = ray.origin - self.pointA
+        v2 = self.pointB - self.pointA
+        v3 = Point(-ray.direction.y, ray.direction.x)
+        dot = v2.dot(v3)
+        if (abs(dot) < 0.000001):
+            return None
+        t1 = v2.cross(v1) / dot
+        t2 = v1.dot(v3) / dot
+        if (t1 >= 0.0 and (t2 >= 0.0 and t2 <= 1.0)):
+            return t1
+        return None
+        
+    def intersectsCD(self, ray):
+        v1 = ray.origin - self.pointC
+        v2 = self.pointD - self.pointC
+        v3 = Point(-ray.direction.y, ray.direction.x)
+        dot = v2.dot(v3)
+        if (abs(dot) < 0.000001):
+            return None
+        t1 = v2.cross(v1) / dot
+        t2 = v1.dot(v3) / dot
+        if (t1 >= 0.0 and (t2 >= 0.0 and t2 <= 1.0)):
+            return t1
+        return None
+    
+    def intersectsAC(self, ray):
+        v1 = ray.origin - self.pointA
+        v2 = self.pointC - self.pointA
+        v3 = Point(-ray.direction.y, ray.direction.x)
+        dot = v2.dot(v3)
+        if (abs(dot) < 0.000001):
+            return None
+        t1 = v2.cross(v1) / dot
+        t2 = v1.dot(v3) / dot
+        if (t1 >= 0.0 and (t2 >= 0.0 and t2 <= 1.0)):
+            return t1
+        return None
+
+    def intersectsBD(self, ray):
+        v1 = ray.origin - self.pointB
+        v2 = self.pointD - self.pointB
+        v3 = Point(-ray.direction.y, ray.direction.x)
+        dot = v2.dot(v3)
+        if (abs(dot) < 0.000001):
+            return None
+        t1 = v2.cross(v1) / dot
+        t2 = v1.dot(v3) / dot
+        if (t1 >= 0.0 and (t2 >= 0.0 and t2 <= 1.0)):
+            return t1
+        return None
 
     def intersects(self, ray):
         """
@@ -28,7 +85,7 @@ class Square:
             """
             v1 = ray.origin - self.pointA
             v2 = self.pointB - self.pointA
-            v3 = Point(ray.direction.y, ray.direction.x, 0)
+            v3 = Point(-ray.direction.y, ray.direction.x)
             dot = v2.dot(v3)
             if (abs(dot) < 0.000001):
                 return None
@@ -41,7 +98,7 @@ class Square:
         def raySegmentIntersectCD(self, ray):
             v1 = ray.origin - self.pointC
             v2 = self.pointD - self.pointC
-            v3 = Point(ray.direction.y, ray.direction.x,0)
+            v3 = Point(-ray.direction.y, ray.direction.x)
             dot = v2.dot(v3)
             if (abs(dot) < 0.000001):
                 return None
@@ -54,7 +111,7 @@ class Square:
         def raySegmentIntersectAC(self, ray):
             v1 = ray.origin - self.pointA
             v2 = self.pointC - self.pointA
-            v3 = Point(ray.direction.y, ray.direction.x,0)
+            v3 = Point(-ray.direction.y, ray.direction.x)
             dot = v2.dot(v3)
             if (abs(dot) < 0.000001):
                 return None
@@ -67,7 +124,7 @@ class Square:
         def raySegmentIntersectBD(self, ray):
             v1 = ray.origin - self.pointB
             v2 = self.pointD - self.pointB
-            v3 = Point(ray.direction.y, ray.direction.x,0)
+            v3 = Point(-ray.direction.y, ray.direction.x)
             dot = v2.dot(v3)
             if (abs(dot) < 0.000001):
                 return None
@@ -77,6 +134,7 @@ class Square:
                 return t1
             return None
         
+        
         minD = 9999
         distance_AB = raySegmentIntersectAB(self, ray)
         distance_CD = raySegmentIntersectCD(self, ray)
@@ -85,19 +143,28 @@ class Square:
         
         if distance_AB is not None:
             minD = distance_AB
+            
         if distance_CD is not None:
             if distance_CD < minD:
                 minD = distance_CD
+                
         if distance_AC is not None:
             if distance_AC < minD:
                 minD = distance_AC
+                
         if distance_BD is not None:
             if distance_BD < minD:
                 minD = distance_BD
 
-        if minD != 9999:
-            return minD
+        if minD is not None:
+            if minD != 9999:
+                return minD
         return None
+        """
+        minD = raySegmentIntersectBD(self, ray)
+        #print (minD)
+        return minD
+        """
     
     
 
