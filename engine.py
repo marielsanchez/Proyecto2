@@ -4,14 +4,16 @@ from point import Point
 from color import Color
 from square import Square
 from plane import Plane
+from utilities import probability
 import random
 
 class RenderEngine:
     """
     Renders the 3D objects into 2D objects using ray tracing
     """
-    MAX_DEPTH= random.randint(1,5)
-    MIN_DISPLACE=0.0001
+    
+    MAX_DEPTH = random.randint(1,5)
+    MIN_DISPLACE = 0.0001 * random.randint(1,9)
 
     def render(self,scene):
         width = scene.width
@@ -48,15 +50,20 @@ class RenderEngine:
         #We calculate the normal at the hit position
         hit_normal = obj_hit.normal(hit_pos)
         color += self.color_at(obj_hit, hit_pos, hit_normal, scene)
-        #Making the reflections of the objects
-        # Finding the reflected rays
-        if depth < self.MAX_DEPTH:
-            new_ray_pos = hit_pos + hit_normal * self.MIN_DISPLACE
-            new_ray_dir = ray.direction - 2 * ray.direction.dot_product(hit_normal) * hit_normal
-            new_ray = Ray(new_ray_pos, new_ray_dir)
-            #Attenuate the reflected ray by the reflection coefficient
-            #calls the funtion of ray tracing again
-            color += self.ray_trace(new_ray,scene,depth+1) * obj_hit.material.reflection 
+        """
+            Making the reflections of the objects
+            Finding the reflected rays
+            In order to make the algorithm more effient
+            We use Monte Carlo for this
+        """
+        if probability():
+            if depth < self.MAX_DEPTH:
+                new_ray_pos = hit_pos + hit_normal * self.MIN_DISPLACE
+                new_ray_dir = ray.direction - 2 * ray.direction.dot_product(hit_normal) * hit_normal
+                new_ray = Ray(new_ray_pos, new_ray_dir)
+                # Attenuate the reflected ray by the reflection coefficient
+                # calls the funtion of ray tracing again                
+                color += self.ray_trace(new_ray,scene,depth+1) * obj_hit.material.reflection 
         
         return color
 

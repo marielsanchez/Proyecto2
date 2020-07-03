@@ -9,7 +9,7 @@ from vector import Vector
 
 WIDTH = 960
 HEIGHT = 540
-RENDERED_IMG = "3balls5.ppm"
+RENDERED_IMG = "FinalResult.ppm"
 CAMERA = Vector(0,-0.35,-1)
 OBJECTS = [
     #Ground Plane
