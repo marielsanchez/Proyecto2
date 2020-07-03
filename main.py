@@ -1,31 +1,36 @@
-from color import Color
-from vector import Vector
-from point import Point
-from sphere import Sphere
-from square import Square
-from scene import Scene
-from engine import RenderEngine
-from light import Light
-from material import Material
 import argparse
+import importlib
+import time
+import os
+
+from engine import RenderEngine
+from scene import Scene
+
 
 def main():
+    print("\n ... Generando imagen ... \n")
+    start = time.time()
     parser = argparse.ArgumentParser()
-    parser.add_argument("imageout", help = "Path to rendered image")
+    parser.add_argument("scene", help = "Path to scene file(without .py extension)")
     args = parser.parse_args()
-    WIDTH = 320
-    HEIGHT = 200
-    camera = Vector(0,0,-1)
-    objects = [Sphere(Point(0,0,0),0.5,Material(Color.from_hex("#FF0000")))]
-    #objects = [Square(Point(-0.25,-0.25,0),Point(+0.25,-0.25,0),Point(-0.25,+0.25,0),Point(+0.25,+0.25,0), Color.from_hex("#FF0000"))]
-    lights = [Light(Point(1.5,-0.5, -10.0), Color.from_hex("#FFFFFF"))]
-    scene = Scene(camera,objects,lights,WIDTH,HEIGHT)
+    mod = importlib.import_module(args.scene)
+
+    # Importing goes the same, mod imports directly from Scene
+    scene = Scene( mod.CAMERA,
+                   mod.OBJECTS,
+                   mod.LIGHTS,
+                   mod.WIDTH,
+                   mod.HEIGHT)
     engine = RenderEngine()
     image = engine.render(scene)
-
+    
     # writes the image
-    with open(args.imageout,"w") as img_file:
+    os.chdir(os.path.dirname(os.path.abspath(mod.__file__)))
+    with open(mod.RENDERED_IMG,"w") as img_file:
         image.write_ppm(img_file)
+    end = time.time()
+    print("Imagen guardada en " + os.path.dirname(os.path.abspath(mod.__file__)))
+    print("\nTiempo de duración del algoritmo: " + str(end - start))
 
 main()
     
