@@ -4,7 +4,12 @@ class Material:
     """
     Has color and propierties with tells us how it reacts to light
     """
-    def __init__(self, color = Color.from_hex("#FFFFFF"), ambient = 0.05, diffuse = 1.0,specular = 1.0, reflection = 0.5):
+    def __init__(self,
+                 color = Color.from_hex("#FFFFFF"),
+                 ambient = 0.05,
+                 diffuse = 1.0,
+                 specular = 1.0,
+                 reflection = 0.5):
         self.color = color
         self.ambient = ambient
         self.diffuse = diffuse
